@@ -1,93 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YourStartup</title>
-  <meta name="description" content="A student startup prototype for BSAD 281.">
+  <meta name="theme-color" content="#f4f8fa">
+  <title>Føre — Know the snow before you go</title>
+  <meta name="description" content="Live, run-by-run snow conditions from the riders at Mount Halvard.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- =========================================================
-       HEADER: logo text + navigation.
-       Each link points to a "view" further down the page (#home, #explore, #about).
-       ========================================================= -->
   <header class="site-header">
-    <a class="brand" href="#home" id="brand-name">YourStartup</a>
-    <nav aria-label="Main">
+    <a class="brand" href="#home" aria-label="Føre home"><span class="brand-mark" aria-hidden="true">f</span>Føre</a>
+    <nav aria-label="Main navigation">
       <a href="#home">Home</a>
-      <a href="#explore">Explore</a>
-      <a href="#about">About</a>
+      <a href="#map">Snow map</a>
+      <a href="#report">Report</a>
+      <a href="#network">Network</a>
     </nav>
+    <button class="sync-control" id="sync-button" type="button" aria-live="polite">
+      <span class="sync-dot" aria-hidden="true"></span><span id="sync-label">3 runs waiting to sync</span>
+    </button>
   </header>
 
   <main>
-
-    <!-- =======================================================
-         VIEW 1: HOME — what you do, for whom, and why it matters.
-         ======================================================= -->
     <section id="home" data-view>
-      <div class="hero">
-        <p class="eyebrow">Prototype</p>
-        <h1 id="tagline">One sentence that says what your startup does.</h1>
-        <p class="lead" id="pitch">
-          Who is your customer, what problem do they have, and why is your
-          solution better than what they use today?
-        </p>
-        <a class="button" href="#explore">See it in action</a>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> Mountain conditions, in real time</p>
+          <p class="wordmark">Føre <span>/ˈfʊː.rə/ · FUR-uh</span></p>
+          <p class="definition">føre = Norwegian for snow conditions</p>
+          <h1>Know the føre before you drop in.</h1>
+          <p class="lead">The snow changes run by run. Føre shows skiers and snowboarders what it actually feels like, using ride signals and quick reports from people on the mountain.</p>
+          <a class="button button-primary" href="#map">See today’s føre <span aria-hidden="true">↗</span></a>
+          <div class="hero-proof" aria-label="Live Mount Halvard network">
+            <div class="avatar-stack" aria-hidden="true"><i>R</i><i>M</i><i>J</i><i>+</i></div>
+            <p><strong>1,284 riders</strong><br><span>making every run clearer</span></p>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of snow-covered Mount Halvard and a tracked ski run">
+          <div class="visual-topline"><span>MOUNT HALVARD</span><span><span class="live-dot"></span> LIVE TODAY</span></div>
+          <svg class="mountain-art" viewBox="0 0 640 440" role="img" aria-labelledby="mountain-title mountain-desc">
+            <title id="mountain-title">A fresh line down Mount Halvard</title>
+            <desc id="mountain-desc">Layered blue mountain peaks with a dotted route descending through the snow.</desc>
+            <path d="M0 315 127 141l75 91L327 59l110 155 62-85 141 186v125H0Z" fill="#dbeaf0"/>
+            <path d="m94 187 33-46 34 41-24-9-13 12-14-10Zm184-87 49-41 47 67-36-17-20 12-15-16Zm195 56 24-32 31 37-22-9-12 8-11-8Z" fill="#fff"/>
+            <path d="m0 320 158-113 83 63 116-102 99 104 82-64 102 75v157H0Z" fill="#b9d1da"/>
+            <path d="M0 344 123 278l88 57 110-79 84 54 94-69 141 93v106H0Z" fill="#edf4f5"/>
+            <path d="M366 113c-13 38 14 48 6 80s-47 35-31 70 48 31 22 70-56 38-42 78" fill="none" stroke="#d85e49" stroke-linecap="round" stroke-width="5" stroke-dasharray="2 13"/>
+            <circle cx="365" cy="112" r="8" fill="#d85e49"/><circle cx="321" cy="413" r="8" fill="#d85e49"/>
+            <g fill="#7896a0"><path d="m87 349 18-34 18 34h-9l10 17H85l10-17Zm426-39 16-30 17 30h-8l9 15h-35l9-15Z"/><path d="m148 378 14-26 14 26h-7l8 13h-30l8-13Zm356 7 12-22 13 22h-6l7 11h-27l7-11Z"/></g>
+            <g class="art-label"><rect x="385" y="207" width="124" height="42" rx="4" fill="#fff"/><circle cx="401" cy="228" r="5" fill="#6ba8bc"/><text x="414" y="225">GLASSWING</text><text x="414" y="239" class="art-small">POWDER · 12 CHATTER</text></g>
+            <g class="elevation"><text x="24" y="34">1,840 M</text><text x="24" y="411">BASE · 620 M</text></g>
+          </svg>
+          <div class="visual-caption"><span>12 runs reporting</span><span>·</span><span>Updated 2 min ago</span></div>
+        </div>
       </div>
 
-      <div class="steps">
-        <div class="card">
-          <h2>1. Step one</h2>
-          <p>Describe the first thing a customer does.</p>
+      <div class="how-it-works">
+        <div class="section-intro">
+          <p class="eyebrow">Made by the mountain</p>
+          <h2>Snow reports with a little more feel.</h2>
         </div>
-        <div class="card">
-          <h2>2. Step two</h2>
-          <p>Describe what happens next.</p>
+        <div class="feature-row">
+          <article class="feature-item"><span class="feature-number">01</span><h3>Ride as usual</h3><p>Your phone can sense vibration, speed, and turn shape as you ride. No mid-run screen time.</p></article>
+          <article class="feature-item"><span class="feature-number">02</span><h3>Tap on the lift</h3><p>Share a one-tap feel check from the chairlift. A few seconds helps the next rider choose.</p></article>
+          <article class="feature-item"><span class="feature-number">03</span><h3>Pick your next line</h3><p>Each run gets a Chatter Score: 0 is soft, buttery powder; 100 is bulletproof ice.</p></article>
         </div>
-        <div class="card">
-          <h2>3. Step three</h2>
-          <p>Describe the result the customer gets.</p>
+      </div>
+
+      <div class="network-strip">
+        <div><p class="eyebrow">Better together</p><h2>More riders. More of the mountain.</h2><p>Every ride and quick report adds another signal. As the Føre network grows, more runs get covered, scores get sharper, and yesterday’s data matters less.</p></div>
+        <a class="text-link" href="#network">Explore the network <span aria-hidden="true">→</span></a>
+        <div class="network-mini" aria-label="Network snapshot: 12 runs covered, 84 percent accuracy, data 8 minutes old">
+          <div><strong>12</strong><span>runs covered</span><i style="--bar: 100%"></i></div>
+          <div><strong>84<span>%</span></strong><span>score accuracy</span><i style="--bar: 84%"></i></div>
+          <div><strong>8<span>m</span></strong><span>average data age</span><i style="--bar: 29%"></i></div>
         </div>
       </div>
     </section>
 
-    <!-- =======================================================
-         VIEW 2: EXPLORE — a list built from the fake data in data.js.
-         ======================================================= -->
-    <section id="explore" data-view hidden>
-      <h1>Explore</h1>
-      <p class="muted">These examples are fake. They come from <code>data.js</code>.</p>
-
-      <label class="search">
-        <span>Search</span>
-        <input type="search" id="search-box" placeholder="Type to filter…">
-      </label>
-
-      <p class="muted" id="saved-count"></p>
-      <div class="grid" id="listing-grid"></div>
-      <p class="empty" id="empty-message" hidden>Nothing matches your search.</p>
+    <section id="map" data-view hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow"><span class="live-dot"></span> Mount Halvard · Today</p><h1>Live snow map</h1><p class="lead">Tap any run to see what the snow feels like right now.</p></div>
+        <div class="mountain-weather"><span class="weather-glyph" aria-hidden="true">☼</span><div><strong>−7°</strong><span>Light snow · 12 km/h</span></div></div>
+      </div>
+      <div class="map-layout">
+        <div class="map-panel">
+          <div class="map-toolbar"><span><span class="live-dot"></span> 12 RUNS · LIVE REPORTS</span><span class="map-north">N <b>↑</b></span></div>
+          <div class="trail-map-wrap">
+            <svg id="trail-map" class="trail-map" viewBox="0 0 800 520" role="group" aria-label="Interactive trail map of Mount Halvard">
+              <path class="map-land" d="M70 52 218 74 320 36 454 76 571 47 732 97 762 232 729 383 661 462 509 487 377 467 242 492 108 433 48 321Z"/>
+              <path class="contour contour-one" d="M72 180c108-62 173-35 254-75s160 18 230-18 126 2 183 30M64 225c106-53 182-28 260-69s154 15 227-18 128 4 190 27M79 273c97-43 169-27 252-60s159 9 228-18 119 1 173 25"/>
+              <path class="contour contour-two" d="M98 356c105-69 179-38 265-69s166 17 242-18 109 1 158 20M116 405c91-52 163-36 247-63s165 13 236-15 115-1 157 19"/>
+              <path class="ridge-line" d="m108 105 109 50 91-50 113 39 100-51 108 53 73 4M83 325l112-30 81 54 113-44 97 50 127-51 82 24"/>
+              <g class="lift-line"><path d="M198 443 533 84"/><circle cx="198" cy="443" r="7"/><circle cx="533" cy="84" r="7"/><path d="m219 420 7 6m39-48 7 6m39-48 7 6m39-48 7 6m39-48 7 6m39-48 7 6"/></g>
+              <text class="map-place" x="116" y="454">HALVARD BASE</text><text class="map-place summit" x="530" y="67">SUMMIT · 1,840 M</text>
+              <g id="trail-lines"></g>
+            </svg>
+          </div>
+          <div class="map-legend" aria-label="Snow condition legend"><span><i class="legend-dot powder"></i>Powder</span><span><i class="legend-dot groomed"></i>Groomed</span><span><i class="legend-dot crud"></i>Crud</span><span><i class="legend-dot moguls"></i>Moguls</span><span><i class="legend-dot icy"></i>Icy</span></div>
+        </div>
+        <aside class="run-panel" aria-live="polite">
+          <div class="run-panel-top"><span class="eyebrow">SELECTED RUN</span><span class="confidence-pill" id="run-confidence">88% confidence</span></div>
+          <h2 id="run-name">Glasswing</h2>
+          <p class="run-subtitle" id="run-meta">Blue · 1.4 km</p>
+          <div class="condition-line"><span class="condition-swatch" id="run-swatch"></span><strong id="run-condition">Powder</strong><span class="updated-time" id="run-updated">Updated 2 min ago</span></div>
+          <div class="chatter-meter"><div class="meter-label"><span>Chatter Score</span><strong><span id="run-score">12</span><small> / 100</small></strong></div><div class="meter-track"><i id="run-meter" style="width: 12%"></i></div><div class="meter-ends"><span>Soft & quiet</span><span>Hard & chattery</span></div></div>
+          <div class="run-stat"><span>Rider reports · last hour</span><strong id="run-reports">38</strong></div>
+          <a id="report-run-link" class="button button-primary button-full" href="#report">Report this run <span aria-hidden="true">→</span></a>
+          <p class="panel-note">Scores blend phone motion signals with quick rider reports.</p>
+        </aside>
+      </div>
+      <p class="map-footnote">All trails and mountain conditions shown are fictional prototype data.</p>
     </section>
 
-    <!-- =======================================================
-         VIEW 3: ABOUT — your team and your story.
-         ======================================================= -->
-    <section id="about" data-view hidden>
-      <h1>About us</h1>
-      <p>Tell the story of why your team started this company.</p>
-      <p>Use first names only, or no names at all — this site is public.</p>
+    <section id="report" data-view hidden>
+      <div class="page-heading report-heading">
+        <div><p class="eyebrow">A small tap, a better next run</p><h1>How was that run?</h1><p class="lead">Quick check-in from the lift. Your report updates the live map immediately.</p></div>
+        <div class="report-snowmark" aria-hidden="true">✳</div>
+      </div>
+      <div class="report-layout">
+        <div class="report-form">
+          <label for="report-run">Choose your run</label>
+          <select id="report-run" name="run"></select>
+          <p class="field-hint" id="report-run-hint">Reporting for Glasswing · 38 rider reports this hour</p>
+          <fieldset class="condition-picker">
+            <legend>What did the snow feel like?</legend>
+            <div class="condition-options">
+              <button type="button" class="condition-option" data-condition="powder"><i class="legend-dot powder"></i><span>Powder</span><small>Soft & floaty</small></button>
+              <button type="button" class="condition-option" data-condition="groomed"><i class="legend-dot groomed"></i><span>Groomed</span><small>Smooth & packed</small></button>
+              <button type="button" class="condition-option" data-condition="crud"><i class="legend-dot crud"></i><span>Crud</span><small>Chopped & variable</small></button>
+              <button type="button" class="condition-option" data-condition="moguls"><i class="legend-dot moguls"></i><span>Moguls</span><small>Bumpy & shaped</small></button>
+              <button type="button" class="condition-option" data-condition="icy"><i class="legend-dot icy"></i><span>Icy</span><small>Firm & fast</small></button>
+            </div>
+          </fieldset>
+          <p class="report-feedback" id="report-feedback" role="status" aria-live="polite">Pick the closest match. That’s your whole report.</p>
+        </div>
+        <aside class="report-aside">
+          <p class="eyebrow">THE CHATTER SCORE</p>
+          <div class="score-visual"><strong>0</strong><div><span class="score-spectrum"></span><span class="score-arrow">▼</span></div><strong>100</strong></div>
+          <p>One number for how much your board chatters over the snow. <strong>Lower is softer.</strong> Higher means firmer and icier.</p>
+          <div class="offline-note"><span class="offline-icon" aria-hidden="true">↗</span><p><strong>Out of signal?</strong><br>Rides can wait on your phone and sync when you’re back in range.</p></div>
+        </aside>
+      </div>
     </section>
 
+    <section id="network" data-view hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">The mountain gets clearer together</p><h1>A network with momentum.</h1><p class="lead">More riders means more fresh signals across more runs. Move the slider to see the effect.</p></div>
+        <div class="network-symbol" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><i>+</i></div>
+      </div>
+      <div class="network-dashboard">
+        <div class="rider-control">
+          <div class="rider-control-heading"><label for="rider-slider">Active riders on the mountain</label><output id="rider-count" for="rider-slider">640</output></div>
+          <input id="rider-slider" type="range" min="10" max="2000" step="10" value="640">
+          <div class="range-labels"><span>10 riders</span><span>2,000 riders</span></div>
+          <p id="network-context">At 640 riders, nearly every run has a fresh read.</p>
+        </div>
+        <div class="network-metrics" aria-live="polite">
+          <article class="metric-row"><div><span>Runs covered</span><strong id="coverage-value">10 <small>/ 12</small></strong></div><div class="metric-bar"><i id="coverage-bar"></i></div><span class="metric-note">with a recent snow read</span></article>
+          <article class="metric-row"><div><span>Score accuracy</span><strong id="accuracy-value">81<small>%</small></strong></div><div class="metric-bar"><i id="accuracy-bar"></i></div><span class="metric-note">agreement with lift-side reports</span></article>
+          <article class="metric-row"><div><span>Average data age</span><strong id="age-value">15<small> min</small></strong></div><div class="metric-bar age-bar"><i id="age-bar"></i></div><span class="metric-note">time since the last ride signal</span></article>
+        </div>
+      </div>
+      <div class="network-explainer"><div class="network-pulse" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><p><strong>Every lap makes the next one smarter.</strong> More passes create better coverage, scores with stronger confidence, and a fresher picture from top to base.</p><span>SIMULATED NETWORK DATA</span></div>
+    </section>
   </main>
 
-  <!-- Keep this footer. Your site must say it is a student project. -->
   <footer class="site-footer">
+    <a class="footer-brand" href="#home">Føre<span> · Mount Halvard</span></a>
     <p>Student prototype for BSAD 281 at St. Francis Xavier University. Not a real company — all data is fictional.</p>
   </footer>
 
-  <!-- Scripts load in this order: data first, then the code that uses it. -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

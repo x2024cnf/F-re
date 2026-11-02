@@ -1,49 +1,102 @@
-// ============================================================
-// app.js — what your site DOES.
-// Plain JavaScript, no libraries, no installs.
-// It uses STARTUP and LISTINGS from data.js (loaded first).
-// ============================================================
-
 (function () {
   "use strict";
 
-  // ----------------------------------------------------------
-  // 1. Saving things in the browser (localStorage).
-  //    This only remembers things on THIS browser on THIS device.
-  //    Your teammates and your customers will NOT see it.
-  //    A real product would need a server and a database for that.
-  // ----------------------------------------------------------
-  const storage = {
-    get: function (key, fallback) {
-      try {
-        const saved = localStorage.getItem(key);
-        return saved === null ? fallback : JSON.parse(saved);
-      } catch (error) {
-        return fallback; // storage blocked or broken: just carry on
-      }
-    },
-    set: function (key, value) {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-      } catch (error) {
-        // storage blocked (e.g. private window): ignore
-      }
+  const mapGroup = document.getElementById("trail-lines");
+  const runSelect = document.getElementById("report-run");
+  let selectedRunId = RUNS[0].id;
+
+  function getRun(id) {
+    return RUNS.find(function (run) { return run.id === id; }) || RUNS[0];
+  }
+
+  function relativeAge(minutes) {
+    return minutes < 1 ? "just now" : minutes + " min ago";
+  }
+
+  function renderMap() {
+    mapGroup.replaceChildren();
+    RUNS.forEach(function (run) {
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute("class", "trail-target condition-" + run.condition + (run.id === selectedRunId ? " is-selected" : ""));
+      group.setAttribute("data-run-id", run.id);
+      group.setAttribute("tabindex", "0");
+      group.setAttribute("role", "button");
+      group.setAttribute("aria-label", run.name + ", " + CONDITIONS[run.condition].label + ", Chatter Score " + run.score);
+
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("class", "trail-stroke");
+      path.setAttribute("d", run.path);
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("class", "trail-label");
+      label.setAttribute("x", run.labelX);
+      label.setAttribute("y", run.labelY);
+      label.textContent = run.name;
+      group.append(path, label);
+      mapGroup.append(group);
+    });
+  }
+
+  function renderRunDetails() {
+    const run = getRun(selectedRunId);
+    document.getElementById("run-name").textContent = run.name;
+    document.getElementById("run-meta").textContent = run.difficulty + " · " + run.length;
+    document.getElementById("run-condition").textContent = CONDITIONS[run.condition].label;
+    document.getElementById("run-confidence").textContent = run.confidence + "% confidence";
+    document.getElementById("run-score").textContent = run.score;
+    document.getElementById("run-meter").style.width = run.score + "%";
+    document.getElementById("run-reports").textContent = run.reports;
+    document.getElementById("run-updated").textContent = "Updated " + relativeAge(run.age);
+    document.getElementById("run-swatch").className = "condition-swatch " + run.condition;
+    runSelect.value = run.id;
+    document.getElementById("report-run-hint").textContent = "Reporting for " + run.name + " · " + run.reports + " rider reports this hour";
+  }
+
+  function selectRun(id) {
+    selectedRunId = id;
+    renderMap();
+    renderRunDetails();
+    document.getElementById("report-feedback").textContent = "Pick the closest match. That’s your whole report.";
+  }
+
+  function updateRunCondition(condition) {
+    const run = getRun(runSelect.value);
+    run.condition = condition;
+    run.score = Math.round(run.score * 0.72 + CONDITIONS[condition].score * 0.28);
+    run.confidence = Math.min(99, run.confidence + 3);
+    run.reports += 1;
+    run.age = 0;
+    selectedRunId = run.id;
+    renderMap();
+    renderRunDetails();
+    document.getElementById("report-feedback").textContent = "Report added for " + run.name + ". The map now reflects your read.";
+    document.querySelectorAll(".condition-option").forEach(function (button) {
+      button.setAttribute("aria-pressed", button.dataset.condition === condition ? "true" : "false");
+    });
+  }
+
+  mapGroup.addEventListener("click", function (event) {
+    const target = event.target.closest("[data-run-id]");
+    if (target) selectRun(target.dataset.runId);
+  });
+  mapGroup.addEventListener("keydown", function (event) {
+    if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-run-id]")) {
+      event.preventDefault();
+      selectRun(event.target.dataset.runId);
     }
-  };
+  });
 
-  let savedIds = storage.get("savedIds", []);
+  RUNS.forEach(function (run) {
+    const option = document.createElement("option");
+    option.value = run.id;
+    option.textContent = run.name + " · " + CONDITIONS[run.condition].label;
+    runSelect.append(option);
+  });
+  runSelect.addEventListener("change", function () { selectRun(runSelect.value); });
+  document.querySelectorAll(".condition-option").forEach(function (button) {
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", function () { updateRunCondition(button.dataset.condition); });
+  });
 
-  // ----------------------------------------------------------
-  // 2. Put the startup's name and pitch on the page.
-  // ----------------------------------------------------------
-  document.title = STARTUP.name;
-  document.getElementById("brand-name").textContent = STARTUP.name;
-  document.getElementById("tagline").textContent = STARTUP.tagline;
-  document.getElementById("pitch").textContent = STARTUP.pitch;
-
-  // ----------------------------------------------------------
-  // 3. Views: show one section at a time, based on the #link in the address bar.
-  // ----------------------------------------------------------
   function showView() {
     const requested = (window.location.hash || "#home").slice(1);
     const views = document.querySelectorAll("[data-view]");
@@ -69,73 +122,35 @@
 
   window.addEventListener("hashchange", showView);
 
-  // ----------------------------------------------------------
-  // 4. Explore page: build one card per listing.
-  //    We use textContent (not innerHTML) so text is always shown
-  //    as text — a basic security habit.
-  // ----------------------------------------------------------
-  const grid = document.getElementById("listing-grid");
-  const searchBox = document.getElementById("search-box");
-  const emptyMessage = document.getElementById("empty-message");
-  const savedCount = document.getElementById("saved-count");
-
-  function makeCard(item) {
-    const card = document.createElement("article");
-    card.className = "card";
-
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = item.category;
-
-    const title = document.createElement("h2");
-    title.textContent = item.name;
-
-    const text = document.createElement("p");
-    text.textContent = item.description;
-
-    const isSaved = savedIds.indexOf(item.id) !== -1;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "button secondary";
-    button.textContent = isSaved ? "Saved ✓" : "Save";
-    button.setAttribute("aria-pressed", isSaved ? "true" : "false");
-    button.addEventListener("click", function () {
-      toggleSaved(item.id);
-    });
-
-    card.append(tag, title, text, button);
-    return card;
+  const riderSlider = document.getElementById("rider-slider");
+  function updateNetwork() {
+    const riders = Number(riderSlider.value);
+    const coverage = Math.min(RUNS.length, Math.max(1, Math.round(RUNS.length * (1 - Math.exp(-riders / 400)))));
+    const accuracy = Math.round(52 + 42 * (1 - Math.exp(-riders / 500)));
+    const age = Math.max(3, Math.round(44 * Math.exp(-riders / 600)));
+    document.getElementById("rider-count").textContent = riders.toLocaleString();
+    document.getElementById("coverage-value").innerHTML = coverage + " <small>/ 12</small>";
+    document.getElementById("coverage-bar").style.width = (coverage / RUNS.length * 100) + "%";
+    document.getElementById("accuracy-value").innerHTML = accuracy + "<small>%</small>";
+    document.getElementById("accuracy-bar").style.width = accuracy + "%";
+    document.getElementById("age-value").innerHTML = age + "<small> min</small>";
+    document.getElementById("age-bar").style.width = (100 - age / 54 * 100) + "%";
+    document.getElementById("network-context").textContent = riders < 180
+      ? "At " + riders.toLocaleString() + " riders, the busiest runs start to come into focus."
+      : riders > 1300
+        ? "At " + riders.toLocaleString() + " riders, fresh signals reach nearly every run."
+        : "At " + riders.toLocaleString() + " riders, nearly every run has a fresh read.";
   }
+  riderSlider.addEventListener("input", updateNetwork);
 
-  function toggleSaved(id) {
-    if (savedIds.indexOf(id) === -1) {
-      savedIds.push(id);
-    } else {
-      savedIds = savedIds.filter(function (savedId) { return savedId !== id; });
-    }
-    storage.set("savedIds", savedIds);
-    renderListings();
-  }
+  document.getElementById("sync-button").addEventListener("click", function () {
+    document.getElementById("sync-label").textContent = "Synced just now";
+    this.classList.add("is-synced");
+    this.setAttribute("aria-label", "Rides synced just now");
+  });
 
-  function renderListings() {
-    const query = searchBox.value.trim().toLowerCase();
-    const matches = LISTINGS.filter(function (item) {
-      const text = (item.name + " " + item.category + " " + item.description).toLowerCase();
-      return text.indexOf(query) !== -1;
-    });
-
-    grid.replaceChildren.apply(grid, matches.map(makeCard));
-    emptyMessage.hidden = matches.length > 0;
-    savedCount.textContent = savedIds.length === 0
-      ? "Tap Save on anything you like."
-      : "You've saved " + savedIds.length + " item(s) on this device.";
-  }
-
-  searchBox.addEventListener("input", renderListings);
-
-  // ----------------------------------------------------------
-  // 5. Start up.
-  // ----------------------------------------------------------
-  renderListings();
+  renderMap();
+  renderRunDetails();
+  updateNetwork();
   showView();
 })();
