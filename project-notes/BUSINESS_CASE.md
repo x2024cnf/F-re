@@ -43,4 +43,6 @@ If one of these companies goes down or raises its prices, we would hopefully swi
 
 One risk is that if the website gets hacked and puts up unreliable run information, riders could get injured on the runs, or pay for a trip to the resort based on inaccurate information. To prevent this, we would need strong web security on the website. We'd also always have a note telling riders to check resort signs and not solely rely on us. Any weird data spikes in the Chatter Score will automatically be flagged by the service. A second risk is someone mass reporting that runs are bad when they aren't, to steer riders away and hog the good snow for themselves. To stop this, trusted reporters' taps would count for more, and only phones actually at the resort could report. A third risk is privacy. Føre knows where riders are and when, which could show when someone is away from home. To protect this, reports would show up anonymously, with a Trusted Reporter badge but no name, and only the rider's own profile would track how much they've reported. Riders could choose to show a username if they want.
 
+AI use: I used Claude to ask me guiding questions, point out weak spots, and fix grammar in my drafts. All reasoning is my own.
+
 What could go wrong — for your customers, their data, or society? What would you do about it?
