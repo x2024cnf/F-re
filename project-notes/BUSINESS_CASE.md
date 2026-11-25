@@ -4,36 +4,43 @@ Your prototype shows *what* the product looks like. This document explains *why*
 
 ## 1. The idea
 
-- **Customer:** Who exactly is it for?
-- **Problem:** What problem do they have today, and how do they solve it now?
-- **Solution:** What does your product do differently or better?
-- **Revenue:** How does the company make money?
+My customers are skiers and snowboarders who commit to making the long drive to the mountain resorts and want to make sure they're getting their money's worth. On the flip side, the resort itself is another one of my customers, which pays to have the service. Currently, skiers and snowboarders alike would check the weather app the night before, and then when they wake up, check the snow cams, for example at Lake Louise or Sunshine in Banff. But what they don't account for is what it's like when you're actually there throughout the day, relying on ski cams that are typically located at key locations like the top of a chairlift. One time I drove to the resort with a friend and we were unaware of the icy conditions awaiting us. My board got a bad chip and my friend got a minor concussion. The drive from Calgary to Banff is about an hour and some change as well, which costs a lot of gas with prices the way they are nowadays, plus a $150ish lift ticket, and that still doesn't account for the expensive ski resort food. Føre uses accurate tracking information on your phone that can detect conditions as you go throughout the day, and you can upload feedback on the chairlift so others can preview what they want to do. Riders pay $39 a season for Føre+, and resort prices vary based on the popularity of the resort. Føre is a good benefit for the resort because they can see what customers think of the mountain each day to prevent loss of customers.
+
 
 ## 2. Where IT creates value
 
-Which parts of the value chain does your product change, and how? Which course concepts apply (e.g. scale, distribution channels, differentiation, data, switching costs)?
+Føre creates value through the relation between users, the skiers and snowboarders who want to track the mountain before they go, and the resort. It changes two components of the value chain. First of all, operations. When the resort analyzes what riders report, they know what to work on and maintain the next day throughout their resort. Then they can send snowcats to the runs that need it, potentially close runs that are too dangerous, and also know where to send ski patrol to hover around specific areas where the conditions can't be avoided. Secondly, service. Riders can preview what's good for their next runs, see suggestions from other riders, and report their thoughts about the run they already completed. Without this, a bad run can cost a rider much more than just a difficult ride. It can cost them a damaged board, a wasted run after waiting in a long lift line, or even a bad crash. When a rider reports a run, it helps others and improves the overall experience at the resort.
 
 ## 3. Network effects
 
-Does your product get more valuable as more people use it?
 
-- Is it a **one-sided** or **two-sided** market? Who are the sides?
-- Where does the extra value come from as the network grows?
-- How would you solve the "empty network" problem at launch?
-- Point to the part of your prototype that shows this.
+Føre is a two-sided network effect between the avid riders who report mountain conditions and the resort itself, which sees the feedback and knows what to adjust to make it a better experience for both sides. Føre also has a same-side effect, since for every additional rider at the resort, the information provided by the Chatter Score gets more accurate, improving everyone's overall experience. On the resort side of things, more riders on Føre improves the mountain's overall functionality and quality of experience, helping increase profits, because it brings in more customers if they know the information is accurate.
+
+Each mountain is its own network. A rider at Sunpeak Ridge, for example, doesn't help a rider at Silverpine, except that if Silverpine is better, riders may consider switching there if it's reasonable for them. However, there are also diminishing returns to the Chatter Score. The 500th rider doesn't add as much of an impact as the 50th, because by then there's already a big average on the mountain, while each of the first 50 reports had a bigger sway. When Føre opens at a new resort, the riders don't carry over, but the data does, so the new resort gets faster, more accurate reports.
+
+The hard part is getting the first users when the network is empty. To resolve this concern, I would offer Føre to one resort for free to test out the product, and then advertise it to customers. The first riders reporting would be ski patrol, coaches and the frequent day-to-day boarders. To get them to report, the incentive Føre will provide is that riders who report five runs a week get a free Føre+ subscription, plus a Trusted Reporter status that shows they're someone reliable who knows the mountain in and out. Until Føre is up and running, the pilot resort would also give resort perks to riders who report. You can see this on the Network page of my prototype, where moving the rider slider from 10 to 2,000 riders shows more runs covered accurately with fresher data.
+
 
 ## 4. Can it be copied? (the moat question)
 
-Anyone in this class could rebuild your website in a weekend with the same AI tool. So the code is **not** your competitive advantage.
+My website is very easy to copy and I'm well aware of that fact. It only took me three weeks across two to three active sessions, so someone with access to the same AI tools could easily replicate my website in a weekend alone. But the website isn't my advantage. My advantage comes from three sources.
 
-- What about your business is **valuable, rare, hard to imitate and well-organized** (VRIN)?
-- What would a competitor with a bigger budget need to copy you, and how long would it take?
-- Which of your advantages get *stronger* over time (data, network, brand, switching costs)?
+The first is the riders using Føre at each resort, which creates a network barrier to entry against rivals. It's valuable because it gives us our competitive advantage against rival companies, where without it we'd lose customers in a heartbeat and fall apart. It's also rare. Technically two apps could both have riders at the same resort, but people won't report in two different apps every chairlift ride. They will use whatever is more convenient to them, which is exactly what Føre builds on. It's hard to imitate, because a rival couldn't start up at my resort. They would have to start somewhere we're not partnered with and build up a big enough following and profit margin to surpass us. There are a few substitutes like group chats and ski cams, but a group chat only covers what a few friends rode, and cams only show a couple of spots.
+
+The second is the season of snow data riders create. It's extremely valuable because it's how we sell Føre to both sides of the audience, by helping the resort know what to do while simultaneously helping riders improve their experience. A competitor can't go back in time to collect last season's reports. The only way they could get it is to buy it from us. A resort could have its own staff report runs, but two or three ski patrollers going down each run can't be as accurate as the hundreds of daily riders.
+
+The third is resort partnerships. Once a resort uses Føre, it would be challenging for a competitor to get them to switch, as long as our user base is larger.
+
+A big competitor would need lots of money, but money alone couldn't buy our data or our riders. It would take a long time, because they would have to surpass the barrier we've already created at each of our resorts. The biggest advantage is the Chatter Score, which only gets stronger and more accurate over time as competitors try to catch up. The biggest weakness is that a big ski or weather app could just add this as a feature in an attempt to technologically leapfrog us.
 
 ## 5. Cloud and operations
 
-What would it take to run this for real? Which parts would you buy as cloud services (SaaS, PaaS, IaaS), and what are the risks of relying on them?
+To run Føre for real, I would buy logins and payments as SaaS (software as a service), since we can just use an existing login or payment service instead of building our own. The app itself and the database of rider reports would run on a platform as a service (PaaS), since we're starting as a small company without an IT team, so having the platform handle the servers makes the most sense for Føre's potential success. Weather data would also come from a software as a service provider, like a paid weather data service. Later on, once we have lots of rider data, we could rent infrastructure as a service (IaaS) for the computing power to train the snow detection system behind the Chatter Score.
+
+If one of these companies goes down or raises its prices, we would hopefully switch to a different supplier, and if not, hopefully by then we're big enough that we can rely on ourselves. Since Føre stores rides offline and uploads that information later on, riders wouldn't lose their reports if the servers went down. The biggest thing a real version would need is the actual phone technology to turn ride vibrations into snow conditions. For the full list, see the "What a real version would need" table in my project log.
 
 ## 6. Risks and ethics
+
+One risk is that if the website gets hacked and puts up unreliable run information, riders could get injured on the runs, or pay for a trip to the resort based on inaccurate information. To prevent this, we would need strong web security on the website. We'd also always have a note telling riders to check resort signs and not solely rely on us. Any weird data spikes in the Chatter Score will automatically be flagged by the service. A second risk is someone mass reporting that runs are bad when they aren't, to steer riders away and hog the good snow for themselves. To stop this, trusted reporters' taps would count for more, and only phones actually at the resort could report. A third risk is privacy. Føre knows where riders are and when, which could show when someone is away from home. To protect this, reports would show up anonymously, with a Trusted Reporter badge but no name, and only the rider's own profile would track how much they've reported. Riders could choose to show a username if they want.
 
 What could go wrong — for your customers, their data, or society? What would you do about it?
